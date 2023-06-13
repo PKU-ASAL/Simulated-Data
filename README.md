@@ -1,5 +1,5 @@
 # Simulated-Data
-We carried out 5 attacks on three different hosts. The attack description and annotation are in their respective compressed files.
+We carried out 5 attacks on three different hosts. The attack description and annotation are listed in the _doc_ folder.
 
 ### Simulate on Ubuntu
 We carried out an attack on Ubuntu 20.04.
