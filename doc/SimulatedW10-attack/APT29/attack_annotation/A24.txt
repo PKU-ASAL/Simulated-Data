@@ -1,0 +1,9 @@
+[occurTime]
+2022-04-08 15:14:30.000
+2022-04-08 15:14:30.000
+[hostIp]
+192.168.0.74
+[pCommand]
+mimikatz2.exe  lsadump::sam exit
+[pFilePath]
+C:\Users\Administrator\Desktop\shell\mimikatz2.exe

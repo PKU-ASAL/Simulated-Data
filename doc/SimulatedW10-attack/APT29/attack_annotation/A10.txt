@@ -1,0 +1,9 @@
+[occurTime]
+2022-04-08 15:11:40.000
+2022-04-08 15:12:17.000
+[hostIp]
+192.168.0.74
+[pCommand]
+.\chromeRemoteServices.ps1
+[pFilePath]
+C:\Users\Administrator\Desktop\shell\chromeRemoteServices.ps1

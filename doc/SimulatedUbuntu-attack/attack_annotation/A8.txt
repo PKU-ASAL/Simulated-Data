@@ -1,0 +1,9 @@
+[occurTime]
+2022-03-25 15:18:20
+2022-03-25 15:18:43
+[hostIp]
+192.168.0.244
+[pCommand]
+JuicyPotato_x64.exe -a whoami & JuicyPotato_x64.exe -a whoami & JuicyPotato_x64.exe -a whoami & JuicyPotato_x64.exe -a whoami
+[pFilePath]
+C:\Users\Public\JuicyPotato_x64.exe

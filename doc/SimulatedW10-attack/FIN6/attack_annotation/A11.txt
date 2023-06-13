@@ -1,0 +1,7 @@
+[occurTime]
+2022-04-08 14:11:23.000
+2022-04-08 14:11:51.000
+[hostIp]
+192.168.0.74
+[pCommand]
+Invoke-AtomicTest T1134.001 -TestNumbers 1

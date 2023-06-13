@@ -1,0 +1,7 @@
+[occurTime]
+2022-03-18 16:45:42
+2022-03-18 16:45:47
+[hostIp]
+192.168.0.95
+[pCommand]
+whoami&arp -a&ipconfig&ping www.baidu.com -c 1

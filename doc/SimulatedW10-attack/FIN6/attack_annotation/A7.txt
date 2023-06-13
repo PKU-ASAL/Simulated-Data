@@ -1,0 +1,7 @@
+[occurTime]
+2022-04-08 14:10:42.000
+2022-04-08 14:10:42.000
+[hostIp]
+192.168.0.74
+[pCommand]
+reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run" /v test /t REG_SZ /d "C:\windows\system32\calc.exe" /f

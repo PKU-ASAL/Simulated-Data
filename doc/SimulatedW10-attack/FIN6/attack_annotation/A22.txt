@@ -1,0 +1,7 @@
+[occurTime]
+2022-04-08 14:15:29.000
+2022-04-08 14:15:29.000
+[hostIp]
+192.168.0.74
+[pCommand]
+mkdir C:\%HOMEPATH%\Desktop\T1022  & echo ipconfig /all > C:\%HOMEPATH%\Desktop\T1022\T1022.txt & 7z.exe a -tzip T1022.zip C:\%HOMEPATH%\Desktop\T1022

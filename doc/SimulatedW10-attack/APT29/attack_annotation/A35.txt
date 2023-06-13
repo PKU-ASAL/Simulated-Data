@@ -1,0 +1,11 @@
+[occurTime]
+2022-04-08 15:16:23.000
+2022-04-08 15:16:39.000
+[hostIp]
+192.168.0.74
+[pCommand]
+Import-Module .\Invoke-PSImage.ps1;Invoke-PSImage -Script .\Invoke-Mimikatz.ps1 -Out .\evil-kiwi.png -Image .\995647.jpg
+[pFilePath]
+C:\Users\Administrator\Desktop\shell\Invoke-PSImage.ps
+C:\Users\Administrator\Desktop\shell\995647.jpg
+C:\Users\Administrator\Desktop\shell\Invoke-Mimikatz.ps1

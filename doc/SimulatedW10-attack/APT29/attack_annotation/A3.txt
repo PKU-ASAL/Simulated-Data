@@ -1,0 +1,7 @@
+[occurTime]
+2022-04-08 15:10:27.000
+2022-04-08 15:10:38.000
+[hostIp]
+192.168.0.74
+[pCommand]
+Invoke-AtomicTest T1059.003 -GetPrereqs; Invoke-AtomicTest T1059.003

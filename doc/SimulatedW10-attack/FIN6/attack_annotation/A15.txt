@@ -1,0 +1,9 @@
+[occurTime]
+2022-04-08 14:12:04.000
+2022-04-08 14:12:05.000
+[hostIp]
+192.168.0.74
+[pCommand]
+echo test >> test.exe
+[pFilePath]
+C:\Users\Administrator\Desktop\shell\test.exe

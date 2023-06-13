@@ -1,0 +1,7 @@
+[occurTime]
+2022-04-08 14:06:04.000
+2022-04-08 14:06:04.000
+[hostIp]
+192.168.0.74
+[pCommand]
+schtasks /create /tn test /tr c:\test\1053.005.bat /sc onlogon

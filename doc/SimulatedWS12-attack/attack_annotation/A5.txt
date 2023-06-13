@@ -1,0 +1,9 @@
+[occurTime]
+2022-03-18 16:47:09
+2022-03-18 16:47:16
+[hostIp]
+192.168.0.95
+[pCommand]
+nbtscan.exe 192.168.0.244/24
+[pFilePath]
+C:\Users\Public\nbtscan.exe

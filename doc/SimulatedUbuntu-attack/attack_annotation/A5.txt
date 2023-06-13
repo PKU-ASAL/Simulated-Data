@@ -1,0 +1,9 @@
+[occurTime]
+2022-03-25 15:16:37
+2022-03-25 15:16:45
+[hostIp]
+192.168.0.155
+[pCommand]
+mkdir -p fscan && unzip -o -d ./fscan fscan-main.zip && chmod +x ./fscan/main && ./fscan/main -m mssql -h 192.168.0.0/24 -user sa -pwd Sa123456
+[pFilePath]
+/usr/tomcat/apache-tomcat-8.5.76/bin/fscan/main

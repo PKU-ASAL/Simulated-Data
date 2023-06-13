@@ -1,0 +1,9 @@
+[occurTime]
+2022-03-18 16:47:20
+2022-03-18 16:47:39
+[hostIp]
+192.168.0.95
+[pCommand]
+PAExec.exe \\192.168.0.244 -u administrator -p Data123456! ipconfig
+[pFilePath]
+C:\Users\Public\PAExec.exe

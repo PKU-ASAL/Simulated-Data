@@ -1,0 +1,9 @@
+[occurTime]
+2022-04-08 14:05:43.000
+2022-04-08 14:05:44.000
+[hostIp]
+192.168.0.74
+[pCommand]
+Start-Process .\T1059.003_script.bat
+[pFilePath]
+C:\Users\Administrator\Desktop\shell\T1059.003_script.bat

@@ -1,0 +1,7 @@
+[occurTime]
+2022-04-08 15:16:44.000
+2022-04-08 15:16:44.000
+[hostIp]
+192.168.0.74
+[pCommand]
+netsh interface portproxy add v4tov4 listenport=65535 connectaddress=127.0.0.1 connectport=22 listenaddress=127.0.0.1 protocol=tcp

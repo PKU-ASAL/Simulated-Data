@@ -1,0 +1,7 @@
+[occurTime]
+2022-04-08 14:32:44.000
+2022-04-08 14:32:45.000
+[hostIp]
+192.168.0.74
+[pCommand]
+ipconfig & arp -a & route print -4

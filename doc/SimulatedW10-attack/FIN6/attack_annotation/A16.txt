@@ -1,0 +1,9 @@
+[occurTime]
+2022-04-08 14:12:15.000
+2022-04-08 14:12:17.000
+[hostIp]
+192.168.0.74
+[pCommand]
+lazagne1.exe browsers
+[pFilePath]
+C:\Users\Administrator\Desktop\shell\lazagne1.exe

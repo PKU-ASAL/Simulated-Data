@@ -1,0 +1,7 @@
+[occurTime]
+2022-04-08 15:13:38.000
+2022-04-08 15:13:38.000
+[hostIp]
+192.168.0.74
+[pCommand]
+mkdir timestomp ; echo ipconfig /all > timestomp/timestomp.txt ; (ls timestomp).LastWriteTime=“2020-10-10 12:12:12”

