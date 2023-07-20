@@ -190,94 +190,70 @@ class ProvGraph(object):
                 update_node_list[i] = relabel_dic[node]
         update_node_list = set(update_node_list)
 
-        # remove_edge_list = []
+        remove_edge_list = []
 
-        # for e in self.G.edges:
-        #     e_type = self.G.edges[e]['type']
-        #     if ETYPE[e_type] in IGNTYPE:
-        #         remove_edge_list.append(e)
+        for e in self.G.edges:
+            e_type = self.G.edges[e]['type']
+            if ETYPE[e_type] in IGNTYPE:
+                remove_edge_list.append(e)
 
-        # self.G.remove_edges_from(remove_edge_list)
+        self.G.remove_edges_from(remove_edge_list)
 
-        # remove_node_list = []
-        # cron_list = []
-        # for node in self.G.nodes:
-        #     attr = self.GetNodeName(node)
-        #     if attr == "":
-        #         remove_node_list.append(node)
-            # if attr == "cron" or attr == "bash" or attr == "sh" or attr == "sshd":
-            # if attr == "cron":
-            #     cron_list.append(node)
+        remove_node_list = []
+        cron_list = []
+        for node in self.G.nodes:
+            attr = self.GetNodeName(node)
+            if attr == "":
+                remove_node_list.append(node)
+            if attr == "cron" or attr == "bash" or attr == "sh" or attr == "sshd":
+            if attr == "cron":
+                cron_list.append(node)
         
         self.G = nx.DiGraph(self.G)
-        # cron_process = set()
-        # reserved_process = dict()
-        # for cron in cron_list:
-        #     for i in self.G.successors(cron):
-        #         # print(i,self.GetNodeAttr(i))
-        #         if self.GetNodeAttr(i) in reserved_process:
-        #             if self.GetNodeScore(i) > reserved_process[self.GetNodeAttr(i)]['score']:
-        #                 # cron_process.add(reserved_process[self.GetNodeAttr(i)]['id'])
-        #                 self.nodes[reserved_process[self.GetNodeAttr(i)]['id']]['flag'] = False
-        #                 reserved_process[self.GetNodeAttr(i)]['id'] = i
-        #                 reserved_process[self.GetNodeAttr(i)]['score'] = self.GetNodeScore(i)
-        #             else:
-        #                 self.nodes[reserved_process[self.GetNodeAttr(i)]['id']]['flag'] = False
-        #         else:
-        #             reserved_process.update({self.GetNodeAttr(i):{'id':i,'score':self.GetNodeScore(i)}})
+        cron_process = set()
+        reserved_process = dict()
+        for cron in cron_list:
+            for i in self.G.successors(cron):
+                # print(i,self.GetNodeAttr(i))
+                if self.GetNodeAttr(i) in reserved_process:
+                    if self.GetNodeScore(i) > reserved_process[self.GetNodeAttr(i)]['score']:
+                        # cron_process.add(reserved_process[self.GetNodeAttr(i)]['id'])
+                        self.nodes[reserved_process[self.GetNodeAttr(i)]['id']]['flag'] = False
+                        reserved_process[self.GetNodeAttr(i)]['id'] = i
+                        reserved_process[self.GetNodeAttr(i)]['score'] = self.GetNodeScore(i)
+                    else:
+                        self.nodes[reserved_process[self.GetNodeAttr(i)]['id']]['flag'] = False
+                else:
+                    reserved_process.update({self.GetNodeAttr(i):{'id':i,'score':self.GetNodeScore(i)}})
 
-        # print(len(cron_list))
-        # print(len(cron_process))
-        # remove_list = cron_process | set(remove_node_list) ｜ cron_list
-        # self.G.remove_nodes_from(remove_node_list)
+        print(len(cron_list))
+        print(len(cron_process))
+        remove_list = cron_process | set(remove_node_list) | cron_list
+        self.G.remove_nodes_from(remove_node_list)
 
-        # #To handle firefox, find pattern
-        # for node in self.G.nodes:
-        #     predecessors = [self.GetNodeAttr(i) for i in self.G.predecessors(node)]
-        #     if len(predecessors) != 0:
-        #         d1 = dict(Counter(predecessors))
-        #         for p in self.G.predecessors(node):
-        #             self.nodes[p]['score'] /= d1[self.GetNodeAttr(p)]
-        #     successors = [self.GetNodeAttr(i) for i in self.G.successors(node)]
-        #     if len(successors) != 0:
-        #         d2 = dict(Counter(successors))
-        #         for p in self.G.successors(node):
-        #             self.nodes[p]['score'] /= d2[self.GetNodeAttr(p)]
+        #To handle firefox, find pattern
+        for node in self.G.nodes:
+            predecessors = [self.GetNodeAttr(i) for i in self.G.predecessors(node)]
+            if len(predecessors) != 0:
+                d1 = dict(Counter(predecessors))
+                for p in self.G.predecessors(node):
+                    self.nodes[p]['score'] /= d1[self.GetNodeAttr(p)]
+            successors = [self.GetNodeAttr(i) for i in self.G.successors(node)]
+            if len(successors) != 0:
+                d2 = dict(Counter(successors))
+                for p in self.G.successors(node):
+                    self.nodes[p]['score'] /= d2[self.GetNodeAttr(p)]
 
 
         # update_node_list = update_node_list - remove_list
 
-        
-        #update only top 10% anomaly score
-        # plt.hist(list(anomaly_score.values()))
-        # plt.savefig('graph.png')
-        # keys = list(anomaly_score.keys())
-        # values = [[anomaly_score[i]] for i in keys]
-        # clf = LocalOutlierFactor(n_neighbors=2)
-        # result = clf.fit_predict(values)
-
-        # anomaly_std = np.std(list(anomaly_score.values()))
-        # anomaly_mean = np.mean(list(anomaly_score.values()))
-        # anomaly_cutoff = anomaly_mean + 3 * anomaly_std
-        # # per = np.percentile(list(anomaly_score.values()),97)
-        # update_node_list = set()
-        # VAE_list = set()
-        # for node in anomaly_score:
-        #     if anomaly_score[node] >= anomaly_cutoff:
-        #         self.nodes[node]['score'] = anomaly_score[node]
-        #         VAE_list.add(node)
-
-        # for i,v in enumerate(result):
-        #     if  v ==  -1:
-        #         update_node_list.append(keys[i])
 
         print('update_list ', len(update_node_list))
         
         # node_centrality = nx.eigenvector_centrality(self.G,max_iter=200,tol = 1e-2)
 
         connected_graph_list = self.propagation(update_node_list)
-        # for i in connected_graph_list:
-        #     print(i.graph['score'],i.nodes())
+
         print('propagation finished')
         self.update_cache(connected_graph_list,topK)
         print('update finished')
@@ -310,16 +286,8 @@ class ProvGraph(object):
             t = os.path.commonprefix([s,n])
             if t.count('/') >= threshold or t.count('/') >= 3:
                 return n
-        # r = s.rfind('/')
-        # if r == -1:
-        #     return -1
-        # else:
-        #     subs = s[:r]
-        # for n in keys:
-        #     if subs in n:
-        #         return n
-
         return -1
+    
     def graph_taylor(self,g):
         cnt = 0
         remove_nodes_list = set()
@@ -349,9 +317,6 @@ class ProvGraph(object):
                 else:
                     c = name
                     engine.store_vector(np.array(v), name)
-                # if name in merge_node:
-                #     merge_node[name].append(i)
-                #     continue
                 merge_node[c].append(i)
 
             for i in merge_node:
@@ -380,9 +345,6 @@ class ProvGraph(object):
                 else:
                     c = name
                     engine.store_vector(np.array(v), name)
-                # if name in merge_node:
-                #     merge_node[name].append(i)
-                #     continue
                 merge_node[c].append(i)
             for i in merge_node:
                 if len(merge_node[i]) >= 5:
@@ -391,11 +353,6 @@ class ProvGraph(object):
 
         if len(remove_nodes_list) != 0:
             g.remove_nodes_from(remove_nodes_list)
-            # self.nodes.pop(n)
-            # for k in g.nodes():
-            #     g.nodes[k]['label'] = self.GetNodeAttr(k) + ' ' + str(self.GetNodeState(k) == False)
-            # nx.drawing.nx_pydot.write_dot(g, str(cnt) + 'p.dot')
-            # cnt += 1
         return g
 
     def final_graph_taylor(self,g):
@@ -463,14 +420,6 @@ class ProvGraph(object):
                 #     merge_node[name].append(i)
                 #     continue
                     merge_node[c].append(i)                        
-                    # if name in merge_node:
-                    #     merge_node[name].append(i)
-                    #     continue                                    
-                    # r = self.if_file_node_merge(name,merge_node)
-                    # if r == -1:
-                    #     merge_node[name].append(i)
-                    # else:
-                    #     merge_node[r].append(i)
                 for i in merge_node:
                     if len(merge_node[i]) >= 2:
                         g = self.merge_nodes(g,merge_node[i][1:],merge_node[i][0],remove_nodes_list)
@@ -478,11 +427,6 @@ class ProvGraph(object):
             if len(remove_nodes_list) != 0:
                 flag = True
                 g.remove_nodes_from(remove_nodes_list)
-            # self.nodes.pop(n)
-            # for k in g.nodes():
-            #     g.nodes[k]['label'] = self.GetNodeAttr(k) + ' ' + str(self.GetNodeState(k) == False)
-            # nx.drawing.nx_pydot.write_dot(g, str(cnt) + 'p.dot')
-            # cnt += 1
         return g
     def caculate_anomaly_score(self,pnode,anomaly_cutoff):
         need_to_caculate = defaultdict(list)
@@ -606,28 +550,6 @@ class ProvGraph(object):
         subgraph = set()
         if depth == 0:
             return subgraph
-        # score = {}
-        # for i in self.G.successors(node):
-        #     score[i] = self.G.out_degree(i)/self.G.in_degree(i)
-        
-        # score = sorted(score.items(), key=lambda d: d[1], reverse=True)[:5]
-        # node_list = [i[0] for i in score]
-        # score = {}
-        # attr_list = {}
-        # for i in self.G.successors(node):
-        #     name = self.GetNodeAttr(i)
-        #     if name in attr_list:
-        #         s1 = self.G.out_degree(i)/(self.G.in_degree(i) + 1) + self.GetNodeScore(i)/10
-        #         if s1 > score[attr_list[name]]:
-        #             attr_list[name] = i
-        #             score[i] = s1
-        #     else:
-        #         attr_list[name] = i
-        #         score[i] = self.G.out_degree(i)/(self.G.in_degree(i) + 1) + self.GetNodeScore(i)/10
-        # new_score = {k:score[k] for k in list(attr_list.values())}
-        
-        # new_score = sorted(new_score.items(), key=lambda d: d[1], reverse=True)[:5]
-        # node_list = [i[0] for i in new_score]
 
         score = {}
         attr_list = {}
@@ -659,10 +581,7 @@ class ProvGraph(object):
                 local_subgraph = self.GetforeSubgraph(node,f_depth,sense)
                 subgraph_node |= local_subgraph
             subgraph = self.G.subgraph(list(subgraph_node)).copy()
-            # subgraph = self.graph_taylor(subgraph)
-            # for node in subgraph.nodes():
-            #     if subgraph.in_degree(node) == 0 and self.GetNodeType(node) :
-            #         remove_node.add(node)
+
             connected_graph = []
             for n in nx.weakly_connected_components(subgraph):
                 g = subgraph.subgraph(n).copy()
@@ -785,9 +704,10 @@ class ProvGraph(object):
         if len(score) == 0:
             return 
         print(score)
-        # if len(score) < 3:
-        #     self.graph_cache = merged_graph_list[:topK]
-        #     return 
+        if len(score) < 3:
+            self.graph_cache = merged_graph_list[:topK]
+            return 
+        # Different method
         # cov = EllipticEnvelope(random_state=0).fit_predict(score)
         # clf = OneClassSVM(kernel="rbf",gamma='auto').fit(score)
         # cov = clf.predict(score)
@@ -799,10 +719,6 @@ class ProvGraph(object):
         # for g in merged_graph_list:
         #     print(g.GetGraphScore())
         for i in cov:
-            # g = merged_graph_list[i]
-            # node_l = [self.GetNodeScore(i) for i in g.nodes() if self.GetNodeType(i) == 0]
-            # print(np.std(node_l))
-            # if v > quan_up:
             g = merged_graph_list[i].graph
             # for k in g.nodes():
             #     g.nodes[k]['label'] = self.GetNodeName(k) + ' ' + str(self.GetNodeScore(k))

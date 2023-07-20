@@ -364,10 +364,6 @@ if __name__ == "__main__":
             # out_process.write(str(i) + ',0' + '\n')
 
 
-    # for i,v in enumerate(loss_dist):
-    #     if label[i] in attack_process:
-    #         print(label[i],v)
-
     recall = cnt/len(list(set(attack_process)))
     precision = cnt/len(anom_list)
     print('recall: ', recall)
