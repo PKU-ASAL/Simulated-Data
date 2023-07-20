@@ -32,27 +32,6 @@ if __name__ == "__main__":
         # print(splitline)
 
         corpus.append(splitline)
-    # input_file = 'process-event-anomaly.txt'
-    # f = open(input_file,'r')
-    # while True:
-    #     line = f.readline()
-    #     if not line:
-    #         break
-    #     if line == '\n' or line == 'None' or line == 'none':
-    #         continue
-    #     line = line.strip().lower()
-    #     if line.endswith('$$$true'):
-    #         line = line.replace('$$$true','')
-    #     elif line.endswith('$$$false'):
-    #         line = line.replace('$$$false','')
-    #     # print(line)
-    #     splitline = sanitize_string(line)
-    #     print(splitline)
-
-    #     corpus.append(splitline)
-
-    # print('finished path')
-
 
     model = FastText(min_count = 5, vector_size=embedding_size, workers= 30, alpha=0.01,window=3,negative=5)
     model.build_vocab(corpus)
