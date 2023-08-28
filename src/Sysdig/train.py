@@ -110,7 +110,7 @@ if __name__ == "__main__":
     parser.add_argument("--d",type = str, default='hw17')
     args = parser.parse_args()
     # dataset = args.dataset
-    epoch = args.epoch
+    epochs = args.epoch
     dataset = args.d
     w2v_dic = dataset + '/filepath-embedding.model'
     w2v = FastText.load(w2v_dic)
@@ -161,7 +161,6 @@ if __name__ == "__main__":
     lr = 0.001         # learning rate
     w_d = 1e-5        # weight decay
     momentum = 0.9
-    epochs = 200
 
     train_file = 'process_embedding_train.json'
     train_set = Train_Loader(train_file)
