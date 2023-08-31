@@ -15,6 +15,7 @@ pip install networkx
 ### offline model training
 ``` 
 $ python filename-embedding.py
+$ python cmdline-embedding.py
 $ python caculate-weight.py
 $ python train.py --epoch 50
 ```
