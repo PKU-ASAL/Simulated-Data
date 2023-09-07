@@ -75,18 +75,13 @@ def extract_process_feature(file_path,tfidf, stability, w2v, c2v):
         if len(split_path) == 0:
             continue
         if isprocess_file:
-            # print(id)
-            # print(filepath)
-            # print(split_path)
             process_map[id] = pname
             isprocess_file = False
             tmp = []
             for l,i in enumerate(split_path):
                 tmp += [c2v.wv[i]]
             r = np.mean(tmp,axis=0)
-            # if not (process_map[id] in stability):
             r = r * mean_s
-            # cmdline_vec = r.tolist()
             
         else:
             tmp = []
@@ -108,12 +103,10 @@ def extract_process_feature(file_path,tfidf, stability, w2v, c2v):
 
 if __name__ == "__main__":
     parser = ArgumentParser()
-    # parser.add_argument("--dataset",type=str,default='E3-cadets')
     parser.add_argument("--epoch",type = int,default=50)
     parser.add_argument("--e",type = int, default=256)
     parser.add_argument("--d",type = str, default='hw20')
     args = parser.parse_args()
-    # dataset = args.dataset
     epochs = args.epoch
     dataset = args.d
     w2v_dic = dataset + '/filepath-embedding.model'
@@ -138,7 +131,6 @@ if __name__ == "__main__":
     print(data_len)
     train_data = defaultdict(list)
     train_data2 = defaultdict(list)
-    # per = 5 * data_len//10
     per = data_len
     cnt = 0
     keys = list(process_vec.keys())
@@ -217,13 +209,6 @@ if __name__ == "__main__":
 
     model = torch.load(dataset + '/AE.model')
 
-# data1 = json.load(open(train_file))
-
-# data = torch.FloatTensor(data1['110701'])
-# print(data1['110701'])
-# sample = model(data.to(device))
-# loss = criterion(data.to(device),sample)
-# print(loss.item())
 
 
     # id2process = json.load(open('../real-time/pretrained-model/' + dataset+'/id2process.json'))
@@ -261,7 +246,6 @@ if __name__ == "__main__":
 
 
 
-    # indices = [i for i,v in enumerate(loss_dist) if v in cov]
     
     print(np.percentile(np.array(loss_dist),50))
     print(np.percentile(np.array(loss_dist),60))
@@ -307,12 +291,10 @@ if __name__ == "__main__":
             anom_score.append(v)
             print(label[i],v)
     plt.figure(figsize=(12,8))
-# plt.title('Anomaly Score Distribution')
     X = loss_dist
     sns.set(font_scale = 2)
     ax = sns.kdeplot(X)
     ax.set_xlabel('Anomaly Score')
-# plt.axvline(upper_threshold, 0.0, 10, color='r')
     SX = ax.lines[0].get_xdata()
     SY = ax.lines[0].get_ydata()
 
@@ -344,8 +326,6 @@ if __name__ == "__main__":
 
     anom_list = []
 
-    # for index in indices:
-        # anom_list.append(label[index])
     for i,v in enumerate(loss_dist):
         if v > anomaly_cutoff:
             anom_list += [label[i]]
@@ -353,15 +333,10 @@ if __name__ == "__main__":
     detected_ano = set()
     print(len(anom_list))
 
-    # out_process = open(dataset + '/detected-process.txt','w')
     for i in anom_list:
         if i in attack_process:
             detected_ano.add(i)
             cnt += 1
-            # out_process.write(str(i) + ',1' + '\n')
-        # else:
-            # out_process.write(str(i) + ',0' + '\n')
-
 
     recall = cnt/len(list(set(attack_process)))
     precision = cnt/len(anom_list)

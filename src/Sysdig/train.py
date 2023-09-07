@@ -47,14 +47,6 @@ def extract_process_feature(file_path,tfidf, w2v, c2v):
             print(line)
         if line == '\n':
             process_vec[id] = np.mean(tmp_process_vec,axis=0).tolist()
-
-            # x = np.mean(tmp_process_vec,axis=0)
-            # if isinstance(x,float):
-            #     process_vec[id] = np.concatenate((cmdline_vec,np.zeros(256))).tolist()
-            # else:
-            #     process_vec[id] = np.concatenate((cmdline_vec,x)).tolist()
-
-            # print(process_vec[id])
             id += 1
             tmp_process_vec = []
             cmdline_vec = []
@@ -82,7 +74,6 @@ def extract_process_feature(file_path,tfidf, w2v, c2v):
             for l,i in enumerate(split_path):
                 tmp += [c2v.wv[i]]
             r = np.mean(tmp,axis=0)
-            # cmdline_vec = r * max_s
             r = r * mean_s
         else:
             tmp = []
@@ -104,12 +95,10 @@ def extract_process_feature(file_path,tfidf, w2v, c2v):
 
 if __name__ == "__main__":
     parser = ArgumentParser()
-    # parser.add_argument("--dataset",type=str,default='E3-cadets')
     parser.add_argument("--epoch",type = int,default=50)
     parser.add_argument("--e",type = int, default=256)
     parser.add_argument("--d",type = str, default='hw17')
     args = parser.parse_args()
-    # dataset = args.dataset
     epochs = args.epoch
     dataset = args.d
     w2v_dic = dataset + '/filepath-embedding.model'
@@ -131,7 +120,6 @@ if __name__ == "__main__":
     print(data_len)
     train_data = defaultdict(list)
     train_data2 = defaultdict(list)
-    # per = 5 * data_len//10
     per = data_len
     cnt = 0
     keys = list(process_vec.keys())
@@ -212,13 +200,6 @@ if __name__ == "__main__":
     model.eval()
 # data1 = json.load(open(train_file))
 
-# data = torch.FloatTensor(data1['110701'])
-# print(data1['110701'])
-# sample = model(data.to(device))
-# loss = criterion(data.to(device),sample)
-# print(loss.item())
-
-
     # id2process = json.load(open('../real-time/pretrained-model/' + dataset+'/id2process.json'))
     # anom_weight = json.load(open('../real-time/pretrained-model/' + dataset+'/stability.json'))
 
@@ -290,12 +271,10 @@ if __name__ == "__main__":
             anom_score.append(v)
             print(label[i],v)
     plt.figure(figsize=(12,8))
-# plt.title('Anomaly Score Distribution')
     X = loss_dist
     sns.set(font_scale = 2)
     ax = sns.kdeplot(X)
     ax.set_xlabel('Anomaly Score')
-# plt.axvline(upper_threshold, 0.0, 10, color='r')
     SX = ax.lines[0].get_xdata()
     SY = ax.lines[0].get_ydata()
 

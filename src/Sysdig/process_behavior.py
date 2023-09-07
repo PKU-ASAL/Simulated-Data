@@ -38,11 +38,9 @@ def split_cmd_and_filename(file_path,dataset):
 
 if __name__ == "__main__":
     parser = ArgumentParser()
-    # parser.add_argument("--dataset",type=str,default='E3-cadets')
     parser.add_argument("--file",type = str, default='benign-labeled.json')
     parser.add_argument("--d",type = str, default = 'hw17')
     args = parser.parse_args()
-    # dataset = args.dataset
     file_path = args.file
     dataset = args.d
     G = nx.DiGraph()

@@ -213,7 +213,6 @@ def sanitize_string(s):
         split_path = [item for item in filter(lambda x:x != '',split_path)]
         split_path.pop(4)
         split_path.pop(8)
-        # print(split_path)
         return split_path
     # Lower-case the string & strip non-alpha.
     for i in s:
@@ -224,18 +223,15 @@ def sanitize_string(s):
     # split_path = [item for item in filter(lambda x:x != '',split_path)]
     newline = []
     for item in split_path:
-        # print(item)
         if len(item) < 2 or item.isdigit():
             continue
         if len(item) <= 5 and len(item) >= 2:
             newline.append(item)
         else:
-            # print(item)
             try:
                 if not nonsense(item):
                     newline.append(item)
                 else:
-                # print(item)
                     newline.append('hash')
             except Exception as e:
                 print(s)
