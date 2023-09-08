@@ -167,7 +167,10 @@ def log_parser(q,dataset,anomaly_cutoff):
             if len(x) > max_len:
                 max_len = len(x)
                 result_graph = g.graph.subgraph(x)
-
+        
+        for k in result_graph.nodes():
+            result_graph.nodes[k]['label'] = result_graph.nodes[k]['label'].replace(':','')
+        
         nx.drawing.nx_pydot.write_dot(result_graph, '../' + dataset + '/dot/' + str(cnt) + '.dot')
         cnt += 1
     
