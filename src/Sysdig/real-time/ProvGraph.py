@@ -213,29 +213,6 @@ class ProvGraph(object):
 
         # update_node_list = update_node_list - remove_list
 
-        
-        #update only top 10% anomaly score
-        # plt.hist(list(anomaly_score.values()))
-        # plt.savefig('graph.png')
-        # keys = list(anomaly_score.keys())
-        # values = [[anomaly_score[i]] for i in keys]
-        # clf = LocalOutlierFactor(n_neighbors=2)
-        # result = clf.fit_predict(values)
-
-        # anomaly_std = np.std(list(anomaly_score.values()))
-        # anomaly_mean = np.mean(list(anomaly_score.values()))
-        # anomaly_cutoff = anomaly_mean + 3 * anomaly_std
-        # # per = np.percentile(list(anomaly_score.values()),97)
-        # update_node_list = set()
-        # VAE_list = set()
-        # for node in anomaly_score:
-        #     if anomaly_score[node] >= anomaly_cutoff:
-        #         self.nodes[node]['score'] = anomaly_score[node]
-        #         VAE_list.add(node)
-
-        # for i,v in enumerate(result):
-        #     if  v ==  -1:
-        #         update_node_list.append(keys[i])
 
         print('update_list ', len(update_node_list))
         

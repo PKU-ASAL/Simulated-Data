@@ -199,50 +199,50 @@ class ProvGraph(object):
 
         self.G.remove_edges_from(remove_edge_list)
 
-        remove_node_list = []
-        cron_list = []
-        for node in self.G.nodes:
-            attr = self.GetNodeName(node)
-            if attr == "":
-                remove_node_list.append(node)
-            if attr == "cron" or attr == "bash" or attr == "sh" or attr == "sshd":
-            if attr == "cron":
-                cron_list.append(node)
+        # remove_node_list = []
+        # cron_list = []
+        # for node in self.G.nodes:
+        #     attr = self.GetNodeName(node)
+        #     if attr == "":
+        #         remove_node_list.append(node)
+        #     if attr == "cron" or attr == "bash" or attr == "sh" or attr == "sshd":
+        #     if attr == "cron":
+        #         cron_list.append(node)
         
         self.G = nx.DiGraph(self.G)
-        cron_process = set()
-        reserved_process = dict()
-        for cron in cron_list:
-            for i in self.G.successors(cron):
-                # print(i,self.GetNodeAttr(i))
-                if self.GetNodeAttr(i) in reserved_process:
-                    if self.GetNodeScore(i) > reserved_process[self.GetNodeAttr(i)]['score']:
-                        # cron_process.add(reserved_process[self.GetNodeAttr(i)]['id'])
-                        self.nodes[reserved_process[self.GetNodeAttr(i)]['id']]['flag'] = False
-                        reserved_process[self.GetNodeAttr(i)]['id'] = i
-                        reserved_process[self.GetNodeAttr(i)]['score'] = self.GetNodeScore(i)
-                    else:
-                        self.nodes[reserved_process[self.GetNodeAttr(i)]['id']]['flag'] = False
-                else:
-                    reserved_process.update({self.GetNodeAttr(i):{'id':i,'score':self.GetNodeScore(i)}})
+        # cron_process = set()
+        # reserved_process = dict()
+        # for cron in cron_list:
+        #     for i in self.G.successors(cron):
+        #         # print(i,self.GetNodeAttr(i))
+        #         if self.GetNodeAttr(i) in reserved_process:
+        #             if self.GetNodeScore(i) > reserved_process[self.GetNodeAttr(i)]['score']:
+        #                 # cron_process.add(reserved_process[self.GetNodeAttr(i)]['id'])
+        #                 self.nodes[reserved_process[self.GetNodeAttr(i)]['id']]['flag'] = False
+        #                 reserved_process[self.GetNodeAttr(i)]['id'] = i
+        #                 reserved_process[self.GetNodeAttr(i)]['score'] = self.GetNodeScore(i)
+        #             else:
+        #                 self.nodes[reserved_process[self.GetNodeAttr(i)]['id']]['flag'] = False
+        #         else:
+        #             reserved_process.update({self.GetNodeAttr(i):{'id':i,'score':self.GetNodeScore(i)}})
 
-        print(len(cron_list))
-        print(len(cron_process))
-        remove_list = cron_process | set(remove_node_list) | cron_list
-        self.G.remove_nodes_from(remove_node_list)
+        # print(len(cron_list))
+        # print(len(cron_process))
+        # remove_list = cron_process | set(remove_node_list) | cron_list
+        # self.G.remove_nodes_from(remove_node_list)
 
         #To handle firefox, find pattern
-        for node in self.G.nodes:
-            predecessors = [self.GetNodeAttr(i) for i in self.G.predecessors(node)]
-            if len(predecessors) != 0:
-                d1 = dict(Counter(predecessors))
-                for p in self.G.predecessors(node):
-                    self.nodes[p]['score'] /= d1[self.GetNodeAttr(p)]
-            successors = [self.GetNodeAttr(i) for i in self.G.successors(node)]
-            if len(successors) != 0:
-                d2 = dict(Counter(successors))
-                for p in self.G.successors(node):
-                    self.nodes[p]['score'] /= d2[self.GetNodeAttr(p)]
+        # for node in self.G.nodes:
+        #     predecessors = [self.GetNodeAttr(i) for i in self.G.predecessors(node)]
+        #     if len(predecessors) != 0:
+        #         d1 = dict(Counter(predecessors))
+        #         for p in self.G.predecessors(node):
+        #             self.nodes[p]['score'] /= d1[self.GetNodeAttr(p)]
+        #     successors = [self.GetNodeAttr(i) for i in self.G.successors(node)]
+        #     if len(successors) != 0:
+        #         d2 = dict(Counter(successors))
+        #         for p in self.G.successors(node):
+        #             self.nodes[p]['score'] /= d2[self.GetNodeAttr(p)]
 
 
         # update_node_list = update_node_list - remove_list
