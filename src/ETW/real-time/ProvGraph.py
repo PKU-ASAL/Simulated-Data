@@ -190,14 +190,14 @@ class ProvGraph(object):
                 update_node_list[i] = relabel_dic[node]
         update_node_list = set(update_node_list)
 
-        remove_edge_list = []
+        # remove_edge_list = []
 
-        for e in self.G.edges:
-            e_type = self.G.edges[e]['type']
-            if ETYPE[e_type] in IGNTYPE:
-                remove_edge_list.append(e)
+        # for e in self.G.edges:
+        #     e_type = self.G.edges[e]['type']
+        #     if ETYPE[e_type] in IGNTYPE:
+        #         remove_edge_list.append(e)
 
-        self.G.remove_edges_from(remove_edge_list)
+        # self.G.remove_edges_from(remove_edge_list)
 
         # remove_node_list = []
         # cron_list = []
