@@ -266,7 +266,6 @@ class ProvGraph(object):
         for n1,n2,data in edge:
         # For all edges related to one of the nodes to merge,
         # make an edge going to or coming from the `new gene`.
-            # print(data)
             if n1 == new_node or n2 == new_node or n1 in remove_nodes_list or n2 in remove_nodes_list:
                 continue
             if n1 in nodes:
@@ -300,18 +299,15 @@ class ProvGraph(object):
             for i in g.successors(node):
                 if i in remove_nodes_list:
                     continue
-                    # print(i,self.GetNodeAttr(i))
                 name = self.GetNodeNewName(i)
                 if name == -1:
                     continue
-                # merge_node[name].append(i)
                 v = np.array([])
                 if self.GetNodeType(i) == NODE_TYPE.PROCESS:
                     v = self.GetEmbedding(name.split('/'), self.c2v)
                 else:
                     v = self.GetEmbedding(name.split('/'), self.w2v)
                 candidate = engine.neighbours(np.array(v))
-                # print(candidate,v)
                 if len(candidate) != 0 and candidate[0][2] < 0.05:
                     c = candidate[0][1]
                 else:
@@ -332,14 +328,12 @@ class ProvGraph(object):
                 name = self.GetNodeNewName(i)
                 if name == -1:
                     continue                              
-                # merge_node[name].append(i)
                 v = np.array([])
                 if self.GetNodeType(i) == NODE_TYPE.PROCESS:
                     v = self.GetEmbedding(name.split('/'), self.c2v)
                 else:
                     v = self.GetEmbedding(name.split('/'), self.w2v)
                 candidate = engine.neighbours(np.array(v))
-                # print(candidate,v)
                 if len(candidate) != 0 and candidate[0][2] < 0.05:
                     c = candidate[0][1]
                 else:
@@ -370,7 +364,6 @@ class ProvGraph(object):
                 for i in g.successors(node):
                     if i in remove_nodes_list:
                         continue
-                    # print(i,self.GetNodeAttr(i))
                     name = self.GetNodeNewName(i)
                     if name == -1:
                         continue
@@ -386,9 +379,6 @@ class ProvGraph(object):
                     else:
                         c = name
                         engine.store_vector(np.array(v), name)
-                # if name in merge_node:
-                #     merge_node[name].append(i)
-                #     continue
                     merge_node[c].append(i)  
             
                 for i in merge_node:
@@ -410,15 +400,12 @@ class ProvGraph(object):
                     else:
                         v = self.GetEmbedding(name.split('/'), self.w2v)
                     candidate = engine.neighbours(np.array(v))
-                    # print(candidate,v)
                     if len(candidate) != 0 and candidate[0][2] < 0.05:
                         c = candidate[0][1]
                     else:
                         c = name
                         engine.store_vector(np.array(v), name)
-                # if name in merge_node:
-                #     merge_node[name].append(i)
-                #     continue
+
                     merge_node[c].append(i)                        
                 for i in merge_node:
                     if len(merge_node[i]) >= 2:
@@ -430,8 +417,6 @@ class ProvGraph(object):
         return g
     def caculate_anomaly_score(self,pnode,anomaly_cutoff):
         need_to_caculate = defaultdict(list)
-        # nodes = self.G.nodes()
-        # have better way to find neighbor?
         undirected_G = self.G.to_undirected(as_view=True)
         print(len(pnode))
         for node in pnode:
@@ -443,9 +428,6 @@ class ProvGraph(object):
             for nei in neibor:
                 if self.GetNodeName(nei) is not None and self.GetNodeName(nei) != 'unknown' and self.GetNodeType(nei) != NODE_TYPE.PROCESS:
                     need_to_caculate[node].append((nei,self.GetNodeName(nei)))
-                        # tmp_dict.add(self.GetNodeAttr(nei))
-                # except Exception as e:
-                #     print(nei,self.GetNodeAttr(nei))
         print('need_to_caculate',len(need_to_caculate))
 
         if len(need_to_caculate) == 0:
@@ -468,25 +450,15 @@ class ProvGraph(object):
             tmp_dict = set()
             process_objects = set(need_to_caculate[node])
             for id,object_name in process_objects:
-                # if node == 123959:
-                #     print(object_name)
                 split_path = sanitize_string(object_name)
                 if len(split_path) == 0:
                     continue
                 flag = True
                 new_name = '/'.join(split_path)
-                # if self.nodes[id]['type'] != NODE_TYPE.PROCESS:
                 self.nodes[id]['newname'] = new_name
-                # if object_name in tmp_dict:
-                #     continue
-                # else:
-                #     tmp_dict.add(object_name)
-
                 tmp = []
                 for l,i in enumerate(split_path):
                     tmp += [self.w2v.wv[i]]
-                    # print(tmp)
-                    # r = torch.sigmoid(torch.mean(tmp,dim=0))
                 r = np.mean(tmp,axis=0)
                 try:
                     t = self.tfidf[new_name.lower()]
@@ -496,26 +468,16 @@ class ProvGraph(object):
                 node_feature[node] += [r.tolist()]
             if flag:
                 node_feature[node] = np.mean(node_feature[node],axis=0).tolist()
-                # if node == 'ef41d488755367316f04fc0e0e9dc9fc':
-                    # print(node_feature[node])
             else:
                 node_feature.pop(node)
         anomaly_score = self.AS.VAEInfer(node_feature,self.nodes)
-
-        # anomaly_std = np.std(list(anomaly_score.values()))
-        # anomaly_mean = np.mean(list(anomaly_score.values()))
-        # anomaly_cutoff = anomaly_mean + 3 * anomaly_std
-        # per = np.percentile(list(anomaly_score.values()),97)
-        # anomaly_cutoff = 77.89585951996837
         update_node_list = set()
         VAE_list = set()
         print(anomaly_cutoff)
         for node in anomaly_score:
             if anomaly_score[node] >= anomaly_cutoff:
-                # self.nodes[node]['score'] = anomaly_score[node]
                 VAE_list.add(node)
         print('VAE: ',len(VAE_list))
-        # print(VAE_list)
         self.filtered |= VAE_list
         update_node_list = VAE_list
         for node in update_node_list:
@@ -611,21 +573,12 @@ class ProvGraph(object):
     
     def MergeGraph(self,graph_cache,graph_list):
         connection_map = np.zeros((len(graph_cache), len(graph_list)), dtype=int)
-        # for i in graph_cache:
-        #     print('cache graph: ',i.GetGraphScore())
-        # for i in graph_list:
-        #     print('update list: ',i.graph['score'])
         for i,g1 in enumerate(graph_cache):
             g1 = g1.graph
             for k,g2 in enumerate(graph_list):
                 node_l1 = set(g1.nodes())
                 node_l2 = set(g2.nodes())
                 common_node = node_l1 & node_l2
-                # flag = False
-                # for node in common_node:
-                #     if self.GetNodeScore(node) > 0:
-                #         flag = True
-                #         break
                 if len(common_node) > 0:
                     connection_map[i][k] = 1
 
@@ -633,15 +586,12 @@ class ProvGraph(object):
         for x in range(connection_map.shape[0]):
             row = connection_map[x]
             if np.all(row == 0):
-                # graph_cache[x].graph['ts'] += 1
                 merged_graph_list.append(graph_cache[x])
                 graph_cache[x].timestamp += 1
 
         for y in range(connection_map.shape[1]):
             col = connection_map[:,y]
             if np.all(col == 0):
-                # g = self.graph_taylor(graph_list[y])
-                # g.graph['score'] = np.sum([self.GetNodeScore(node) for node in g.nodes])
                 cache_graph = CacheGraph(graph_list[y])
                 merged_graph_list.append(cache_graph)
          
@@ -694,13 +644,7 @@ class ProvGraph(object):
     def update_cache(self,graph_list,topK):
         merged_graph_list = self.MergeGraph(self.graph_cache,graph_list)
         merged_graph_list = [g for g in merged_graph_list if g.GetGraphScore() > 0 and g.graph.number_of_nodes() > 10]
-        #  and g.graph.number_of_nodes() > 10
-        # merged_graph_list = [g for g in merged_graph_list if g.GetGraphTS() < 3]
-        # for g in merged_graph_list:
-        #     nx.drawing.nx_pydot.write_dot(g.graph, str(g.graph.graph['score']) + '.dot')
         score = [x.GetGraphScore() for x in merged_graph_list]
-        # print(score)
-        # a = list(np.array(score).flatten())
         if len(score) == 0:
             return 
         print(score)
@@ -720,13 +664,7 @@ class ProvGraph(object):
         #     print(g.GetGraphScore())
         for i in cov:
             g = merged_graph_list[i].graph
-            # for k in g.nodes():
-            #     g.nodes[k]['label'] = self.GetNodeName(k) + ' ' + str(self.GetNodeScore(k))
-            # nx.drawing.nx_pydot.write_dot(g, str(i) + '.dot')
             print('[Alert]: ', score[i], len(g.nodes()),self.attack_node(g.nodes()))
-            # node_l = {i:self.GetNodeScore(i) for i in g.nodes()}
-            # sorted_l = sorted(node_l.items(), key=lambda d: d[1], reverse=True)
-                # print(sorted_l[:10])
         merged_graph_list.sort(key = lambda x: x.GetGraphScore(),reverse = True)
         
         
