@@ -311,18 +311,6 @@ if __name__ == "__main__":
 
     plt.savefig(dataset + '/loss distribution.png')
 
-    # cov = grubbs.max_test_outliers(loss_dist, alpha=0.05)
-    # if len(cov) != 0:
-    #     flag = True
-    #     while flag:
-    #         outliers = grubbs.max_test_outliers(cov, alpha=0.05)
-    #         print(outliers)
-    #         if len(outliers) == 0:
-    #             break
-    #         cov = outliers
-
-    # indices = [i for i,v in enumerate(loss_dist) if v in cov]
-
 
     anom_list = []
 
@@ -345,8 +333,3 @@ if __name__ == "__main__":
     print('ground truth:', len(attack_process))
     print('detected process:', len(anom_list))
     print(set(attack_process) - detected_ano)
-
-    leak = set(attack_process) - detected_ano
-    for i in leak:
-        print(i, attack_process[i])
-
