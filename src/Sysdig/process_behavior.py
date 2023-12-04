@@ -117,5 +117,5 @@ if __name__ == "__main__":
 
     data.close()
     print(attack_process)
-    # if 'benign' in event_file:
-    #     split_cmd_and_filename(event_file,dataset)
+    if 'benign' in event_file:
+        split_cmd_and_filename(event_file,dataset)
