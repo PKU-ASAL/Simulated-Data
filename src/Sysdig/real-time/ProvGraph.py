@@ -658,18 +658,9 @@ class ProvGraph(object):
                 else:
                     tmp_graph_list.append(graph_cache[idx].graph)
             G = nx.compose_all(tmp_graph_list)
-            # for k in G.nodes():
-            #         # print(k)
-            #     G.nodes[k]['label'] = self.GetNodeNewName(k) + ' ' + str(self.GetNodeState(k) == False)
 
-            # nx.drawing.nx_pydot.write_dot(G, 'debug1.dot')
+            G = self.graph_taylor(G)
 
-            # G = self.graph_taylor(G)
-            # for k in G.nodes():
-            #         # print(k)
-            #     G.nodes[k]['label'] = self.GetNodeNewName(k) + ' ' + str(self.GetNodeState(k) == False)
-
-            # nx.drawing.nx_pydot.write_dot(G, 'debug2.dot')
             # assert(nx.is_weakly_connected(G))
             G.graph['score'] = np.sum([self.nodes[node]['score'] for node in G.nodes])
             merged_graph_list.append(CacheGraph(G))

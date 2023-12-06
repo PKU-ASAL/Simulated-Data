@@ -105,7 +105,7 @@ def log_parser(q,dataset,anomaly_cutoff):
     cnt = 0
     for i, g in enumerate(proGraph.graph_cache):
 
-        # g.graph = proGraph.final_graph_taylor(g.graph)
+        g.graph = proGraph.final_graph_taylor(g.graph)
 
         for k in g.graph.nodes():
             # if (g.graph.in_degree(k) == 1 and g.graph.degree(k) == 1 ):
