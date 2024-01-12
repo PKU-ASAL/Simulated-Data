@@ -9,9 +9,9 @@ We carried out an attack on Ubuntu 20.04.
 ![image](doc/img/ubuntu.png)
 
 SimulatedUbuntu.zip  
-&emsp;- hw17.zip  
-&emsp;&emsp; - benign.json  
-&emsp;&emsp; - anomaly.json  
+$\qquad$ - hw17.zip  
+$\qquad\qquad$ - benign.json  
+$\qquad\qquad$ - anomaly.json  
 
 
 ### Simulate on Windows server 2012
