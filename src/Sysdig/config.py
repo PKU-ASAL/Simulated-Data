@@ -31,6 +31,12 @@ class APTLOG_ARTRIBUTE:
     NET_ARTRIBUTE = ['proc.cmdline', 'fd.name', 'is_warn']
     # EXECVE_ARTRIBUTE = ['proc.cmdline', 'evt.args', 'is_warn']
 
+class BENLOG_ARTRIBUTE:
+    FILE_ARTRIBUTE = ['proc.cmdline', 'fd.name']
+    PROCESS_ARTRIBUTE = ['proc.pcmdline', 'proc.cmdline']
+    NET_ARTRIBUTE = ['proc.cmdline', 'fd.name']
+    # EXECVE_ARTRIBUTE = ['proc.cmdline', 'evt.args', 'is_warn']
+
 
 class APTLOG_KEY:
     FILE = "FILE"

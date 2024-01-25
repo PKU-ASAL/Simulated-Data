@@ -38,7 +38,7 @@ def split_cmd_and_filename(file_path,dataset):
 
 if __name__ == "__main__":
     parser = ArgumentParser()
-    parser.add_argument("--file",type = str, default='benign-labeled.json')
+    parser.add_argument("--file",type = str, default='benign.json')
     parser.add_argument("--d",type = str, default = 'hw17')
     args = parser.parse_args()
     file_path = args.file
@@ -55,12 +55,20 @@ if __name__ == "__main__":
     # execve_op_logs = org_log[org_log['evt.type'].isin(APTLOG_TYPE.EXECVE_OP)]
     # print('execve logs count:', len(execve_op_logs))
 
-    if len(file_op_logs) > 0:
-        file_op_logs = file_op_logs[APTLOG_ARTRIBUTE.FILE_ARTRIBUTE]
-    if len(process_op_logs) > 0:
-        process_op_logs = process_op_logs[APTLOG_ARTRIBUTE.PROCESS_ARTRIBUTE]
-    if len(net_op_logs) > 0:
-        net_op_logs = net_op_logs[APTLOG_ARTRIBUTE.NET_ARTRIBUTE]
+    if 'benign' in file_path:
+        if len(file_op_logs) > 0:
+            file_op_logs = file_op_logs[BENLOG_ARTRIBUTE.FILE_ARTRIBUTE]
+        if len(process_op_logs) > 0:
+            process_op_logs = process_op_logs[BENLOG_ARTRIBUTE.PROCESS_ARTRIBUTE]
+        if len(net_op_logs) > 0:
+            net_op_logs = net_op_logs[BENLOG_ARTRIBUTE.NET_ARTRIBUTE]
+    else:
+        if len(file_op_logs) > 0:
+            file_op_logs = file_op_logs[APTLOG_ARTRIBUTE.FILE_ARTRIBUTE]
+        if len(process_op_logs) > 0:
+            process_op_logs = process_op_logs[APTLOG_ARTRIBUTE.PROCESS_ARTRIBUTE]
+        if len(net_op_logs) > 0:
+            net_op_logs = net_op_logs[APTLOG_ARTRIBUTE.NET_ARTRIBUTE]
     # if len(execve_op_logs) > 0:
     #     execve_op_logs = execve_op_logs[APTLOG_ARTRIBUTE.EXECVE_ARTRIBUTE]
 
