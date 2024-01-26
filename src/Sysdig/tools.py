@@ -143,6 +143,82 @@ def graph_add_node_realapt(g: nx.Graph, logs, key, md5_to_node:dict, node_to_typ
     return g,anomaly_set
 
 
+def graph_add_node_benign(g: nx.Graph, logs, key, md5_to_node:dict, node_to_type:dict):
+    node_set = set()
+    edge_set = set()
+    anomaly_set = set()
+    if key == APTLOG_KEY.FILE:
+        # add file type node
+        for index, row in logs.iterrows():
+            s_node = get_md5(row['proc.cmdline'])
+            t_node = get_md5(row['fd.name'])
+            if s_node not in md5_to_node:
+                md5_to_node[s_node] = row['proc.cmdline']
+                node_to_type[s_node] = {'type':APTLOG_NODE_TYPE.PROCESS, 'is_warn':False}
+            if t_node not in md5_to_node:
+                md5_to_node[t_node] = row['fd.name']
+                node_to_type[t_node] = {'type':APTLOG_NODE_TYPE.FILE, 'is_warn':False}
+            # e_id = row['log_id']
+            is_warn = False
+            if is_warn:
+                anomaly_set.add(s_node)
+            node_set.add(s_node)
+            node_set.add(t_node)
+            edge_set.add((s_node, t_node, is_warn))
+    elif key == APTLOG_KEY.PROCESS:
+        # add process type node
+        for index, row in logs.iterrows():
+            s_node = get_md5(row['proc.pcmdline'])
+            t_node = get_md5(row['proc.cmdline'])
+            if s_node not in md5_to_node:
+                md5_to_node[s_node] = row['proc.pcmdline']
+                node_to_type[s_node] = {'type':APTLOG_NODE_TYPE.PROCESS, 'is_warn':False}
+            if t_node not in md5_to_node:
+                md5_to_node[t_node] = row['proc.cmdline']
+                node_to_type[t_node] = {'type':APTLOG_NODE_TYPE.PROCESS, 'is_warn':False}
+            # e_id = row['log_id']
+            is_warn = False
+            if is_warn:
+                anomaly_set.add(s_node)
+                anomaly_set.add(t_node)
+            node_set.add(s_node)
+            node_set.add(t_node)
+            edge_set.add((s_node, t_node, is_warn))
+    elif key == APTLOG_KEY.NET:
+        # add net type node
+        for index, row in logs.iterrows():
+            s_node = get_md5(row['proc.cmdline'])
+            t_node = get_md5(row['fd.name'])
+            if s_node not in md5_to_node:
+                md5_to_node[s_node] = row['proc.cmdline']
+                node_to_type[s_node] = {'type':APTLOG_NODE_TYPE.PROCESS, 'is_warn':False}
+            if t_node not in md5_to_node:
+                md5_to_node[t_node] = row['fd.name']
+                node_to_type[t_node] = {'type':APTLOG_NODE_TYPE.NET, 'is_warn':False}
+            # e_id = row['log_id']
+            is_warn = False
+            if is_warn:
+                anomaly_set.add(s_node)
+            node_set.add(s_node)
+            node_set.add(t_node)
+            edge_set.add((s_node, t_node, is_warn))
+
+    # add node
+    node_list = list(node_set)
+    node_list.sort()
+    for node in node_list:
+        g.add_node(node)
+        g.nodes[node]['label'] = md5_to_node[node]
+        g.nodes[node]['type'] = node_to_type[node]['type']
+        g.nodes[node]['is_warn'] = node_to_type[node]['is_warn']
+
+    # add edge
+    edge_list = list(edge_set)
+    edge_list.sort()
+    for edge in edge_list:
+        g.add_edge(edge[0], edge[1], is_warn=edge[2])
+
+    return g,anomaly_set
 def directed_acyclic_graph(graph=''):
     # -------
     # Function definition: 'directed_acyclic_graph()'

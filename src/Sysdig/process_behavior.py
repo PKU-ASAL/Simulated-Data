@@ -62,6 +62,15 @@ if __name__ == "__main__":
             process_op_logs = process_op_logs[BENLOG_ARTRIBUTE.PROCESS_ARTRIBUTE]
         if len(net_op_logs) > 0:
             net_op_logs = net_op_logs[BENLOG_ARTRIBUTE.NET_ARTRIBUTE]
+        G = graph_init()
+
+        md5_to_node = {}
+        node_to_type = {}
+        
+        G, _ = graph_add_node_benign(G, file_op_logs, APTLOG_KEY.FILE, md5_to_node, node_to_type)
+        G, _ = graph_add_node_benign(G, process_op_logs, APTLOG_KEY.PROCESS, md5_to_node, node_to_type)
+        G, _ = graph_add_node_benign(G, net_op_logs, APTLOG_KEY.NET, md5_to_node, node_to_type)
+
     else:
         if len(file_op_logs) > 0:
             file_op_logs = file_op_logs[APTLOG_ARTRIBUTE.FILE_ARTRIBUTE]
@@ -69,21 +78,19 @@ if __name__ == "__main__":
             process_op_logs = process_op_logs[APTLOG_ARTRIBUTE.PROCESS_ARTRIBUTE]
         if len(net_op_logs) > 0:
             net_op_logs = net_op_logs[APTLOG_ARTRIBUTE.NET_ARTRIBUTE]
-    # if len(execve_op_logs) > 0:
-    #     execve_op_logs = execve_op_logs[APTLOG_ARTRIBUTE.EXECVE_ARTRIBUTE]
 
-    G = graph_init()
+        G = graph_init()
 
-    md5_to_node = {}
-    node_to_type = {}
-    anomalyset = set()
-    G, x = graph_add_node_realapt(G, file_op_logs, APTLOG_KEY.FILE, md5_to_node, node_to_type)
-    anomalyset |= x
-    G, x = graph_add_node_realapt(G, process_op_logs, APTLOG_KEY.PROCESS, md5_to_node, node_to_type)
-    anomalyset |= x
-    G, x = graph_add_node_realapt(G, net_op_logs, APTLOG_KEY.NET, md5_to_node, node_to_type)
-    anomalyset |= x
-    print(len(anomalyset))
+        md5_to_node = {}
+        node_to_type = {}
+        anomalyset = set()
+        G, x = graph_add_node_realapt(G, file_op_logs, APTLOG_KEY.FILE, md5_to_node, node_to_type)
+        anomalyset |= x
+        G, x = graph_add_node_realapt(G, process_op_logs, APTLOG_KEY.PROCESS, md5_to_node, node_to_type)
+        anomalyset |= x
+        G, x = graph_add_node_realapt(G, net_op_logs, APTLOG_KEY.NET, md5_to_node, node_to_type)
+        anomalyset |= x
+        print(len(anomalyset))
     # G = graph_add_node_realapt(G, execve_op_logs, APTLOG_KEY.EXECVE, md5_to_node, node_to_type)
 
     # nx.drawing.nx_pydot.write_dot(G, 'test.dot')
