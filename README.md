@@ -49,7 +49,16 @@ The prototype of our reimplementation of ProvDetector that is described in paper
 ## Citations
 If you use any of our tools or datasets in your research for publication, please kindly cite the following paper:
 ```
-NODLINK: An Online System for Fine-Grained APT Attack Detection and Investigation
+@inproceedings{Li_2024, series={NDSS 2024},
+   title={NODLINK: An Online System for Fine-Grained APT Attack Detection and Investigation},
+   url={http://dx.doi.org/10.14722/ndss.2024.23204},
+   DOI={10.14722/ndss.2024.23204},
+   booktitle={Proceedings 2024 Network and Distributed System Security Symposium},
+   publisher={Internet Society},
+   author={Li, Shaofei and Dong, Feng and Xiao, Xusheng and Wang, Haoyu and Shao, Fei and Chen, Jiedong and Guo, Yao and Chen, Xiangqun and Li, Ding},
+   year={2024},
+   collection={NDSS 2024} 
+}
 ```
 
 ## Feedback

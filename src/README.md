@@ -1,6 +1,6 @@
 # NodLink
 
-## Setup the Enviroment
+## Setup the Environment
 
 ### install Nostril
 sudo pip install git+https://github.com/casics/nostril.git
